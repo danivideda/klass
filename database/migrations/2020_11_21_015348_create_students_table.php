@@ -18,7 +18,6 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('nickname');
             $table->string('email')->unique();
-            $table->json('classroom_joined')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

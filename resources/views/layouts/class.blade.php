@@ -7,7 +7,7 @@
         <ul class="flex items-center">
             <li>
                 @if (auth('student')->check())
-                    <a href="#" class="text-gray-400 hover:text-black">
+                    <a href="{{ route('student.dashboard', $classroom->id) }}" class="text-gray-400 hover:text-black">
                         Back to Class
                     </a>
                 @else
