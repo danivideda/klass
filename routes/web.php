@@ -25,6 +25,21 @@ Route::get('/', function () {
     return view('home');
 })->name('home')->middleware('guest');
 
+Route::middleware('guest.custom')->group(function () {
+    Route::get('/student/register', [RegisterController::class, 'showStudentRegisterForm'])->name('register.student');
+    Route::post('/student/register', [RegisterController::class, 'registerStudent']);
+
+    Route::get('/teacher/register', [RegisterController::class, 'showTeacherRegisterForm'])->name('register.teacher');
+    Route::post('/teacher/register', [RegisterController::class, 'registerTeacher']);
+
+    Route::get('/student/login', [LoginController::class, 'showStudentLoginForm'])->name('login.student');
+    Route::post('/student/login', [LoginController::class, 'loginStudent'])->name('login.student');
+
+    Route::get('/teacher/login', [LoginController::class, 'showTeacherLoginForm'])->name('login.teacher');
+    Route::post('/teacher/login', [LoginController::class, 'loginTeacher'])->name('login.teacher');
+
+});
+
 Route::middleware('auth.student')->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
 
@@ -63,21 +78,6 @@ Route::middleware('auth.teacher')->group(function () {
     Route::get('/teacher/classroom/{classroom}/assignment/{assignment}', [AssignmentController::class, 'show']);
 
     Route::get('/teacher/classroom/{classroom}/review', [ReviewController::class, 'index'])->name('teacher.review');
-});
-
-Route::middleware('guest.custom')->group(function () {
-    Route::get('/student/register', [RegisterController::class, 'showStudentRegisterForm'])->name('register.student');
-    Route::post('/student/register', [RegisterController::class, 'registerStudent']);
-
-    Route::get('/teacher/register', [RegisterController::class, 'showTeacherRegisterForm'])->name('register.teacher');
-    Route::post('/teacher/register', [RegisterController::class, 'registerTeacher']);
-
-    Route::get('/student/login', [LoginController::class, 'showStudentLoginForm'])->name('login.student');
-    Route::post('/student/login', [LoginController::class, 'loginStudent'])->name('login.student');
-
-    Route::get('/teacher/login', [LoginController::class, 'showTeacherLoginForm'])->name('login.teacher');
-    Route::post('/teacher/login', [LoginController::class, 'loginTeacher'])->name('login.teacher');
-
 });
 
 Route::post('/student/logout', [LogoutController::class, 'logoutStudent'])->name('logout.student');
